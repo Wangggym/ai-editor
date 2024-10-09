@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom theme colors */
+:root {
+  --color-primary: 59 130 246;
+  --color-secondary: 16 185 129;
+  --color-accent: 239 68 68;
+  --color-background: 249 250 251;
+  --color-foreground: 17 24 39;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-green-500 transition-colors duration-300;
+  }
+}
+
+/* Custom styles */
+.custom-container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Responsive font sizes */
+html {
+  font-size: 16px;
+}
+
+@screen sm {
+  html {
+    font-size: 18px;
+  }
+}
+
+@screen lg {
+  html {
+    font-size: 20px;
+  }
+}
+
+/* 在文件末尾添加 */
+.myCodeBlockHighlight {
+  background-color: rgba(51, 51, 51, 0.5) !important;
+  border-radius: 0;
+  display: inline-block;
+}
