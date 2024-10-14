@@ -10,10 +10,10 @@ export default function Home() {
         <h1 className="text-2xl font-bold">AI Editor</h1>
       </header>
       <main className="flex-grow flex p-4">
-        <div className="w-1/2 pr-2">
+        <div className="w-3/4 pr-2">
           <Editor />
         </div>
-        <div className="w-1/2 pl-2">
+        <div className="w-1/4 pl-2">
           <Output content="Code execution results will be displayed here" />
         </div>
       </main>
