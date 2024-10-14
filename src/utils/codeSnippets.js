@@ -10,7 +10,56 @@ function greet(person: Person) {
 }
 
 const john: Person = { name: "John", age: 30 };
-console.log(greet(john));`,
+console.log(greet(john));
+
+// Advanced TypeScript features
+type Status = "pending" | "approved" | "rejected";
+
+interface Task {
+  id: number;
+  title: string;
+  status: Status;
+  completedAt?: Date;
+}
+
+class TaskManager {
+  private tasks: Task[] = [];
+
+  addTask(title: string): void {
+    const newTask: Task = {
+      id: this.tasks.length + 1,
+      title,
+      status: "pending"
+    };
+    this.tasks.push(newTask);
+  }
+
+  updateTaskStatus(id: number, newStatus: Status): void {
+    const task = this.tasks.find(t => t.id === id);
+    if (task) {
+      task.status = newStatus;
+      if (newStatus === "approved") {
+        task.completedAt = new Date();
+      }
+    }
+  }
+
+  getTaskSummary(): string {
+    const pending = this.tasks.filter(t => t.status === "pending").length;
+    const approved = this.tasks.filter(t => t.status === "approved").length;
+    const rejected = this.tasks.filter(t => t.status === "rejected").length;
+
+    return \`Tasks: \${pending} pending, \${approved} approved, \${rejected} rejected\`;
+  }
+}
+
+// Usage
+const manager = new TaskManager();
+manager.addTask("Learn TypeScript");
+manager.addTask("Build a project");
+manager.updateTaskStatus(1, "approved");
+console.log(manager.getTaskSummary());
+`,
 
   javascript: `// JavaScript Demo
 function fibonacci(n) {
