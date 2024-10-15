@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { CODE_SNIPPETS } from '../utils/codeSnippets'
 import { selectCodeBlock, getCurrentCodeBlock } from '../utils/editorUtils'
+import { useEditor } from '../context/EditorContext'
 
 const SUPPORTED_LANGUAGES = ['typescript', 'javascript', 'python', 'html', 'css', 'json']
 
@@ -11,6 +12,7 @@ export default function Editor() {
   const monacoRef = useRef(null)
   const [language, setLanguage] = useState('typescript')
   const [isEditorReady, setIsEditorReady] = useState(false)
+  const { setSelectedCode } = useEditor()
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -46,7 +48,11 @@ export default function Editor() {
       // Add Cmd+K shortcut
       editorRef.current.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyK, () => {
         const { startLine, endLine } = getCurrentCodeBlock(editorRef.current, monaco);
-        selectCodeBlock(editorRef.current, monaco, startLine, endLine);
+        const range = selectCodeBlock(editorRef.current, monaco, startLine, endLine);
+        
+        // Get the selected text
+        const selectedText = editorRef.current.getModel().getValueInRange(range);
+        setSelectedCode(selectedText);
       })
     }
   }

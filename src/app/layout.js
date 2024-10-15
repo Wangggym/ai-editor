@@ -1,5 +1,5 @@
 import "./globals.css";
-
+import { EditorProvider } from '../context/EditorContext';
 
 export const metadata = {
   title: "Create Next App",
@@ -9,9 +9,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-      >
-        {children}
+      <body>
+        <EditorProvider>
+          {children}
+        </EditorProvider>
       </body>
     </html>
   );
