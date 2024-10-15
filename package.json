@@ -14,6 +14,7 @@
     "monaco-editor": "^0.52.0",
     "next": "14.2.15",
     "normalize.css": "^8.0.1",
+    "openai": "^4.67.3",
     "react": "^18",
     "react-dom": "^18",
     "style-loader": "^4.0.0"
