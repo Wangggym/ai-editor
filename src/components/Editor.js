@@ -1,74 +1,33 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { CODE_SNIPPETS } from '../utils/codeSnippets'
-import { selectCodeBlock, getCurrentCodeBlock } from '../utils/editorUtils'
+import MonacoEditor from './MonacoEditor'
 
 const SUPPORTED_LANGUAGES = ['typescript', 'javascript', 'python', 'html', 'css', 'json']
 
 export default function Editor() {
-  const editorRef = useRef(null)
-  const monacoRef = useRef(null)
   const [language, setLanguage] = useState('typescript')
-  const [isEditorReady, setIsEditorReady] = useState(false)
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      import('monaco-editor').then(monaco => {
-        monacoRef.current = monaco
-        initializeEditor(monaco)
-      })
-    }
-
-    return () => {
-      editorRef.current?.dispose()
-    }
-  }, [])
-
-  useEffect(() => {
-    if (isEditorReady) {
-      updateEditorLanguage()
-    }
-  }, [language, isEditorReady])
-
-  const initializeEditor = (monaco) => {
-    if (!editorRef.current) {
-      editorRef.current = monaco.editor.create(document.getElementById('editor-container'), {
-        value: CODE_SNIPPETS[language],
-        language: language,
-        theme: 'vs-dark',
-        automaticLayout: true,
-      })
-      setIsEditorReady(true)
-      // Remove the initial selection
-      // selectCodeBlock(editorRef.current, monaco, 1, 5)
-
-      // Add Cmd+K shortcut
-      editorRef.current.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyK, () => {
-        const { startLine, endLine } = getCurrentCodeBlock(editorRef.current, monaco);
-        selectCodeBlock(editorRef.current, monaco, startLine, endLine);
-      })
-    }
-  }
-
-  const updateEditorLanguage = () => {
-    if (editorRef.current && monacoRef.current) {
-      const model = editorRef.current.getModel()
-      monacoRef.current.editor.setModelLanguage(model, language)
-      editorRef.current.setValue(CODE_SNIPPETS[language])
-      // Remove the automatic re-selection
-      // selectCodeBlock(editorRef.current, monacoRef.current, 1, 5)
-    }
-  }
+  const [editor, setEditor] = useState(null)
+  const [monaco, setMonaco] = useState(null)
 
   const handleLanguageChange = (e) => {
     setLanguage(e.target.value)
+    if (editor && monaco) {
+      editor.setValue(CODE_SNIPPETS[e.target.value])
+    }
   }
 
   const randomlySelectCodeBlock = () => {
-    if (editorRef.current && monacoRef.current) {
-      selectCodeBlock(editorRef.current, monacoRef.current)
+    if (editor && monaco) {
+      const { selectCodeBlock } = require('../utils/editorUtils')
+      selectCodeBlock(editor, monaco)
     }
+  }
+
+  const handleEditorReady = (editorInstance, monacoInstance) => {
+    setEditor(editorInstance)
+    setMonaco(monacoInstance)
   }
 
   return (
@@ -92,7 +51,11 @@ export default function Editor() {
           Randomly Select Code Block
         </button>
       </div>
-      <div id="editor-container" className="flex-grow border border-gray-300 rounded-lg shadow-lg"></div>
+      <MonacoEditor
+        language={language}
+        initialValue={CODE_SNIPPETS[language]}
+        onEditorReady={handleEditorReady}
+      />
     </div>
   )
 }
