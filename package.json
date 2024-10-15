@@ -11,12 +11,14 @@
   "dependencies": {
     "@babel/traverse": "^7.25.7",
     "css-loader": "^7.1.2",
+    "diff": "^7.0.0",
     "monaco-editor": "^0.52.0",
     "next": "14.2.15",
     "normalize.css": "^8.0.1",
     "openai": "^4.67.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-monaco-editor": "^0.56.2",
     "style-loader": "^4.0.0"
   },
   "devDependencies": {
