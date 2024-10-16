@@ -5,7 +5,7 @@ import { useEditor } from '../context/EditorContext';
 import { getAIResponse } from '../services/openaiService';
 
 export default function Output() {
-  const { selectedCode } = useEditor();
+  const { selectedCode, setModifiedCode } = useEditor();
   const [userInput, setUserInput] = useState('');
   const [aiResponse, setAiResponse] = useState('');
   const [error, setError] = useState('');
@@ -23,6 +23,7 @@ export default function Output() {
       const response = await getAIResponse(selectedCode, userInput);
       console.log('OpenAI API response received');
       setAiResponse(response);
+      setModifiedCode(response); // Set the modified code in the context
     } catch (error) {
       console.error('Error:', error);
       setError(error.message || 'An error occurred while processing your request.');
