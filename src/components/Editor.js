@@ -18,13 +18,6 @@ export default function Editor() {
     }
   }
 
-  const randomlySelectCodeBlock = () => {
-    if (editor && monaco) {
-      const { selectCodeBlock } = require('../utils/editorUtils')
-      selectCodeBlock(editor, monaco)
-    }
-  }
-
   const handleEditorReady = (editorInstance, monacoInstance) => {
     setEditor(editorInstance)
     setMonaco(monacoInstance)
@@ -44,12 +37,6 @@ export default function Editor() {
             </option>
           ))}
         </select>
-        <button 
-          onClick={randomlySelectCodeBlock}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Randomly Select Code Block
-        </button>
       </div>
       <MonacoEditor
         language={language}

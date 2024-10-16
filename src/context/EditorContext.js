@@ -6,9 +6,10 @@ const EditorContext = createContext();
 
 export const EditorProvider = ({ children }) => {
   const [selectedCode, setSelectedCode] = useState('');
+  const [modifiedCode, setModifiedCode] = useState('');
 
   return (
-    <EditorContext.Provider value={{ selectedCode, setSelectedCode }}>
+    <EditorContext.Provider value={{ selectedCode, setSelectedCode, modifiedCode, setModifiedCode }}>
       {children}
     </EditorContext.Provider>
   );
