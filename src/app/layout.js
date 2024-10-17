@@ -1,5 +1,6 @@
 import "./globals.css";
 import { EditorProvider } from '../context/EditorContext';
+import Link from 'next/link';
 
 export const metadata = {
   title: "Create Next App",
@@ -10,6 +11,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
+        <nav className="bg-gray-800 p-4">
+          <div className="container mx-auto flex justify-between items-center">
+            <Link href="/" className="text-white text-xl font-bold">Logo</Link>
+            <ul className="flex space-x-4">
+              <li><Link href="/" className="text-white hover:text-gray-300">Home</Link></li>
+              <li><Link href="/about" className="text-white hover:text-gray-300">About</Link></li>
+              <li><Link href="/contact" className="text-white hover:text-gray-300">Contact</Link></li>
+              <li><Link href="/diff" className="text-white hover:text-gray-300">Diff</Link></li>
+            </ul>
+          </div>
+        </nav>
         <EditorProvider>
           {children}
         </EditorProvider>
